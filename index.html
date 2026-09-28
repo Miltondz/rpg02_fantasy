@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Crawler Engine</title>
+    <link rel="stylesheet" href="styles/main.css?v=10">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        
+        <!-- Debug UI Panel -->
+        <div id="debug-panel" class="debug-panel" data-ui-component="debug-panel" data-ui-name="main-debug-panel">
+            <button class="debug-toggle-btn" id="debug-toggle" title="Debug info">[i]</button>
+            <div class="debug-panel-body">
+                <h3>Debug Info</h3>
+                <div class="debug-item" data-ui-component="position-display" data-ui-name="position-container">
+                    <span class="debug-label">Position:</span>
+                    <span id="debug-position" class="debug-value" data-ui-component="position-value" data-ui-name="player-position">0, 0</span>
+                </div>
+                <div class="debug-item" data-ui-component="direction-display" data-ui-name="direction-container">
+                    <span class="debug-label">Direction:</span>
+                    <span id="debug-direction" class="debug-value" data-ui-component="direction-value" data-ui-name="player-direction">N</span>
+                </div>
+                <div class="debug-item" data-ui-component="fps-display" data-ui-name="fps-container">
+                    <span class="debug-label">FPS:</span>
+                    <span id="debug-fps" class="debug-value" data-ui-component="fps-value" data-ui-name="performance-counter">60</span>
+                </div>
+                <div class="debug-item" data-ui-component="tile-display" data-ui-name="tile-container">
+                    <span class="debug-label">Tile Type:</span>
+                    <span id="debug-tile-type" class="debug-value" data-ui-component="tile-value" data-ui-name="current-tile-info">floor</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container" data-ui-component="toast-container" data-ui-name="notification-system"></div>
+
+        <!-- Fade Overlay for Level Transitions -->
+        <div id="fade-overlay" class="fade-overlay" data-ui-component="fade-overlay" data-ui-name="transition-overlay"></div>
+
+        <!-- Combat container (used by CombatAnimations for intro transitions) -->
+        <div id="combat-container" style="display:none;position:absolute;inset:0;"></div>
+
+        <!-- Encounter entry splash — shown during shatter transition, z:9000 (under shatter tiles) -->
+        <div id="encounter-splash" class="encounter-splash hidden"></div>
+
+        <!-- ── Pixel HUD ── -->
+        <div id="pixel-hud">
+            <!-- Left: party column (up to 4 stacked member cards) -->
+            <div id="hud-party-col"></div>
+
+            <!-- Top-center: compass -->
+            <div id="hud-compass"></div>
+
+            <!-- Top-right: quest / location panel -->
+            <div id="hud-quest"></div>
+
+            <!-- Bottom-left: minimap (keep IDs — existing JS writes here) -->
+            <div id="minimap" data-ui-component="minimap-panel" data-ui-name="level-minimap">
+                <div id="minimap-grid" class="minimap-grid"></div>
+            </div>
+
+            <!-- Bottom-left: scrolling event log -->
+            <div id="hud-log"></div>
+
+            <!-- Bottom-center: 8-slot hotbar -->
+            <div id="hud-hotbar"></div>
+
+            <!-- Feature #27: Clickable movement buttons (bottom-right) -->
+            <div id="hud-movement-buttons" aria-label="Movement controls"></div>
+        </div>
+
+        <!-- Legacy HUD stubs — kept so existing JS references don't crash -->
+        <div id="exploration-hud" style="display:none">
+            <div id="party-status-bar"></div>
+            <div id="floor-indicator"></div>
+        </div>
+    </div>
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Ink narrative runtime (exposes window.inkjs.Story) -->
+    <script src="https://cdn.jsdelivr.net/npm/inkjs@2/dist/ink.js"></script>
+
+    <!-- Game Engine Scripts -->
+    <script type="module" src="src/main.js"></script>
+
+    <!-- Dev tool links (hidden, open from DevTools: document.getElementById('dev-tools').style.display='block') -->
+    <div id="dev-tools" style="position:fixed;bottom:4px;right:4px;z-index:99999;display:flex;gap:6px;visibility:hidden">
+      <a href="map-editor.html" target="_blank" style="font-family:monospace;font-size:9px;color:#FF0055;border:1px solid #FF0055;padding:2px 6px;text-decoration:none;background:rgba(0,0,0,.9)">MAP EDITOR</a>
+      <a href="adventure-creator.html" target="_blank" style="font-family:monospace;font-size:9px;color:#00FF44;border:1px solid #00FF44;padding:2px 6px;text-decoration:none;background:rgba(0,0,0,.9)">ADVENTURE CREATOR</a>
+    </div>
+</body>
+</html>
